@@ -22,7 +22,7 @@ CREATE TABLE cliente (
 
 CREATE TABLE cuenta (
   numero       BIGINT PRIMARY KEY,
-  tipo         ENUM ('Ahorros','Corriente') NOT NULL,
+  tipo         ENUM ('AHORROS','CORRIENTE') NOT NULL,
   saldo        DECIMAL(15,2) NOT NULL,
   estado       BOOLEAN       NOT NULL,
   cliente_id   BIGINT        NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE cuenta (
 CREATE TABLE movimiento (
   id           BIGINT AUTO_INCREMENT PRIMARY KEY,
   fecha        DATE          NOT NULL,
-  tipo         ENUM ('Deposito','Retiro') NOT NULL,
+  tipo         ENUM ('DEPOSITO','RETIRO') NOT NULL,
   valor        DECIMAL(15,2) NOT NULL,
   saldo        DECIMAL(15,2) NOT NULL,
   cuenta_num   BIGINT        NOT NULL,

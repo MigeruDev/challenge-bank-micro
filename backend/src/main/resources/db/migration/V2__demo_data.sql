@@ -16,21 +16,21 @@ INSERT INTO cliente (cliente_id,contrasena,estado) VALUES
 
 -- 2) Cuentas  (saldo = saldo inicial)
 INSERT INTO cuenta (numero,tipo,saldo,estado,cliente_id) VALUES
- (478758,'Ahorros',    2000,TRUE,1),   -- Jose
- (225487,'Corriente',  100,TRUE,2),   -- Marianela
- (495878,'Ahorros',      0,TRUE,3),   -- Juan
- (496825,'Ahorros',    540,TRUE,2);   -- Marianela
+ (478758,'AHORROS',    2000,TRUE,1),   -- Jose
+ (225487,'CORRIENTE',  100,TRUE,2),   -- Marianela
+ (495878,'AHORROS',      0,TRUE,3),   -- Juan
+ (496825,'AHORROS',    540,TRUE,2);   -- Marianela
 
--- 3) Nueva cuenta corriente de Jose
+-- 3) Nueva cuenta CORRIENTE de Jose
 INSERT INTO cuenta (numero,tipo,saldo,estado,cliente_id) VALUES
- (585545,'Corriente',1000,TRUE,1);
+ (585545,'CORRIENTE',1000,TRUE,1);
 
--- 4) Movimientos  (valor positivo = Deposito, negativo = Retiro)
+-- 4) Movimientos  (valor positivo = DEPOSITO, negativo = RETIRO)
 INSERT INTO movimiento (fecha,tipo,valor,saldo,cuenta_num) VALUES
- ('2022-02-10','Retiro',   -575,1425,478758),
- ('2022-02-10','Deposito',  600, 700,225487),
- ('2022-02-08','Deposito',  150, 150,495878),
- ('2022-02-08','Retiro',   -540,   0,496825);
+ ('2022-02-10','RETIRO',   -575,1425,478758),
+ ('2022-02-10','DEPOSITO',  600, 700,225487),
+ ('2022-02-08','DEPOSITO',  150, 150,495878),
+ ('2022-02-08','RETIRO',   -540,   0,496825);
 
 -- 4.1) Sincronizar saldos finales de cada cuenta
 UPDATE cuenta SET saldo = 1425 WHERE numero = 478758;
