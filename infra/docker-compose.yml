@@ -1,36 +1,49 @@
 services:
   db:
-    image: mysql:8.3          # pin, no "latest" drift
+    image: mysql:8.3 # pin, no "latest" drift
     restart: unless-stopped
     container_name: mysql-bank
-    ports: ["3306:3306"]      # localhost access for dev tools
+    ports: ["3306:3306"] # localhost access for dev tools
     environment:
       MYSQL_DATABASE: ${DB_NAME:-bank}
-      MYSQL_USER:      ${DB_USER:-bank}
-      MYSQL_PASSWORD:  ${DB_PASS:-bank}
+      MYSQL_USER: ${DB_USER:-bank}
+      MYSQL_PASSWORD: ${DB_PASS:-bank}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT:-root}
       TZ: America/Guayaquil
     volumes:
       - dbdata:/var/lib/mysql
-      # optional startup seed – comment out if you rely only on Flyway
-      #- ./db/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${DB_USER:-bank}", "-p${DB_PASS:-bank}"]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u${DB_USER:-bank}",
+          "-p${DB_PASS:-bank}",
+        ]
       interval: 10s
       retries: 5
       start_period: 20s
     networks: [bank-net]
 
-  # ←– add the Spring container later
-  # api:
-  #   build: ../backend
-  #   depends_on: { db: { condition: service_healthy } }
-  #   environment:
-  #     SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME:-bank}
-  #     SPRING_DATASOURCE_USERNAME: ${DB_USER:-bank}
-  #     SPRING_DATASOURCE_PASSWORD: ${DB_PASS:-bank}
-  #   ports: ["8080:8080"]
-  #   networks: [bank-net]
+  api:
+    build:
+      context: ../backend # ruta relativa al compose file
+      dockerfile: Dockerfile
+    container_name: bank-api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME:-bank}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-bank}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASS:-bank}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate # usamos Flyway
+      SPRING_FLYWAY_ENABLED: "true"
+    ports: ["8080:8080"]
+    networks: [bank-net]
 
 volumes:
   dbdata:
