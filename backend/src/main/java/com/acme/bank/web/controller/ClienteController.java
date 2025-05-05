@@ -1,25 +1,32 @@
 package com.acme.bank.web.controller;
 
-import com.acme.bank.domain.*;
-import com.acme.bank.repository.*;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.acme.bank.service.ClienteService;
+import com.acme.bank.web.dto.ClienteDTO;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/clientes")
 @RequiredArgsConstructor
 public class ClienteController {
-  private final ClienteRepository repo;
+
+  private final ClienteService service;
 
   @GetMapping
-  public List<Cliente> all() {
-    return repo.findAll();
+  public List<ClienteDTO> all() {
+    return service.listar();
   }
 
   @PostMapping
-  public Cliente create(@RequestBody Cliente c) {
-    return repo.save(c);
+  public ClienteDTO create(@RequestBody ClienteDTO dto) {
+    return service.crear(dto);
   }
 }

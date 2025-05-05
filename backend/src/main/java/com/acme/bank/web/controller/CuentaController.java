@@ -1,32 +1,32 @@
 package com.acme.bank.web.controller;
 
-import com.acme.bank.domain.*;
-import com.acme.bank.repository.*;
-import com.acme.bank.web.dto.*;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.acme.bank.service.CuentaService;
+import com.acme.bank.web.dto.CuentaDTO;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/cuentas")
 @RequiredArgsConstructor
 public class CuentaController {
-  private final CuentaRepository repo;
+
+  private final CuentaService service;
 
   @GetMapping
-  public List<Cuenta> all() {
-    return repo.findAll();
+  public List<CuentaDTO> all() {
+    return service.listar();
   }
 
   @PostMapping
-  public Cuenta create(@RequestBody CuentaDTO dto) {
-    Cuenta c = new Cuenta();
-    c.setNumero(dto.numero());
-    c.setTipo(dto.tipo());
-    c.setSaldo(dto.saldo());
-    c.setEstado(dto.estado());
-    // cliente fetch omitted for brevity
-    return repo.save(c);
+  public CuentaDTO create(@RequestBody CuentaDTO dto) {
+    return service.crear(dto);
   }
 }
