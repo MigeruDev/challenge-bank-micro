@@ -15,8 +15,8 @@ import com.acme.bank.web.dto.MovimientoDTO;
 import com.acme.bank.domain.TipoMovimiento;
 
 @SpringBootTest
-@Import(TestcontainersConfiguration.class)   // mismo contexto que el resto
-@Transactional                                // rollback tras cada test
+@Import(TestcontainersConfiguration.class)
+@Transactional
 class MovimientoServiceTest {
 
     @Autowired
