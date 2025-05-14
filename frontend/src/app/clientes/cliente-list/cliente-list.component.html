@@ -1,1 +1,48 @@
-<p>cliente-list works!</p>
+<div class="list-header">
+  <h2>Clientes</h2>
+  <button class="btn-new" (click)="router.navigate(['clientes','nuevo'])">
+    Nuevo
+  </button>
+</div>
+
+<div class="list-toolbar">
+  <input
+    type="text"
+    [(ngModel)]="filter"
+    placeholder="Buscar..."
+    class="search-input"
+  />
+</div>
+
+<table class="list-table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Género</th>
+      <th>Edad</th>
+      <th>Identificación</th>
+      <th>Dirección</th>
+      <th>Teléfono</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let c of clientes | keyFilter: ['nombre','identificacion']: filter">
+      <td>{{ c.nombre }}</td>
+      <td>{{ c.genero }}</td>
+      <td>{{ c.edad }}</td>
+      <td>{{ c.identificacion }}</td>
+      <td>{{ c.direccion }}</td>
+      <td>{{ c.telefono }}</td>
+      <td>{{ c.estado ? 'Activo' : 'Inactivo' }}</td>
+      <td class="actions-cell">
+        <button (click)="router.navigate(['clientes','editar', c.clienteId])">✎</button>
+        <button (click)="delete(c.clienteId)">🗑</button>
+      </td>
+    </tr>
+    <tr *ngIf="(clientes | keyFilter: ['nombre','identificacion']: filter).length === 0">
+      <td colspan="8" class="no-data">No se encontraron clientes</td>
+    </tr>
+  </tbody>
+</table>

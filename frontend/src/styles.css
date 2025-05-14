@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+/* estilos generales */
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.btn-new {
+  background-color: #ffc107;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.list-toolbar {
+  margin-bottom: 0.5rem;
+}
+
+.search-input {
+  width: 200px;
+  padding: 0.25rem;
+}
+
+.list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.list-table th, .list-table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.actions-cell button {
+  margin-right: 0.5rem;
+}
+
+.no-data {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}

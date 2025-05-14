@@ -1,0 +1,20 @@
+nav {
+  padding: 1rem;
+  background: #1976d2;
+  color: white;
+}
+
+nav a {
+  color: white;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+
+nav a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+main {
+  padding: 1rem;
+}
