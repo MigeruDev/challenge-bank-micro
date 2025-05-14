@@ -1,0 +1,25 @@
+<div>
+  <h2>Cuentas</h2>
+  <button (click)="router.navigate(['cuentas','nuevo'])">Nueva Cuenta</button>
+  <input [(ngModel)]="filter" placeholder="Buscar..." />
+  <table>
+    <thead>
+      <tr>
+        <th>Número</th><th>Tipo</th><th>Saldo</th><th>Estado</th><th>Cliente</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of cuentas | keyFilter: ['numero','tipo'] : filter">
+        <td>{{c.numero}}</td>
+        <td>{{c.tipo}}</td>
+        <td>{{c.saldo}}</td>
+        <td>{{c.estado}}</td>
+        <td>{{c.clienteId}}</td>
+        <td>
+          <button (click)="router.navigate(['cuentas','editar',c.numero])">✎</button>
+          <button (click)="delete(c.numero)">🗑</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

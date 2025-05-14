@@ -1,0 +1,22 @@
+<h2>{{ numero ? 'Editar' : 'Nueva' }} Cuenta</h2>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <label>Número:
+    <input type="number" formControlName="numero" /></label>
+  <label>Tipo:
+    <select formControlName="tipo">
+      <option *ngFor="let t of tipos" [ngValue]="t">{{t}}</option>
+    </select>
+  </label>
+  <label>Saldo inicial:
+    <input type="number" formControlName="saldo" /></label>
+  <label>Estado:
+    <select formControlName="estado">
+      <option [ngValue]="true">Activo</option>
+      <option [ngValue]="false">Inactivo</option>
+    </select>
+  </label>
+  <label>Cliente ID:
+    <input type="number" formControlName="clienteId" /></label>
+  <button type="submit" [disabled]="form.invalid">Guardar</button>
+  <button type="button" (click)="router.navigate(['/cuentas'])">Cancelar</button>
+</form>
