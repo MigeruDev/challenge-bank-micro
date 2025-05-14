@@ -1,16 +1,11 @@
 package com.acme.bank.web.controller;
 
 import java.util.List;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import com.acme.bank.service.CuentaService;
 import com.acme.bank.web.dto.CuentaDTO;
-
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -26,7 +21,21 @@ public class CuentaController {
   }
 
   @PostMapping
-  public CuentaDTO create(@RequestBody CuentaDTO dto) {
+  @ResponseStatus(HttpStatus.CREATED)
+  public CuentaDTO create(@Valid @RequestBody CuentaDTO dto) {
     return service.crear(dto);
+  }
+
+  @PutMapping("/{numero}")
+  public CuentaDTO update(
+      @PathVariable Long numero,
+      @Valid @RequestBody CuentaDTO dto) {
+    return service.actualizar(numero, dto);
+  }
+
+  @DeleteMapping("/{numero}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable Long numero) {
+    service.eliminar(numero);
   }
 }
